@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Mastery Academy</title>
+  <meta name="description" content="A premium AI-first learning platform for mastering Artificial Intelligence from beginner to advanced level." />
+  <style>
+    :root {
+      --bg: #05070d;
+      --text: #eef7ff;
+      --muted: rgba(238, 247, 255, .68);
+      --panel: rgba(255, 255, 255, .1);
+      --line: rgba(255, 255, 255, .16);
+      --cyan: #00d5ff;
+      --green: #3ee98f;
+      --violet: #7c3aed;
+      --orange: #ff7a59;
+      --shadow: 0 24px 80px rgba(0, 0, 0, .28);
+    }
+
+    body.light {
+      --bg: #f7fbff;
+      --text: #08111f;
+      --muted: rgba(8, 17, 31, .68);
+      --panel: rgba(255, 255, 255, .74);
+      --line: rgba(8, 17, 31, .12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(0, 213, 255, .25), transparent 28%),
+        radial-gradient(circle at 86% 8%, rgba(124, 58, 237, .22), transparent 30%),
+        radial-gradient(circle at 62% 90%, rgba(62, 233, 143, .18), transparent 32%),
+        var(--bg);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .24;
+      background-image:
+        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(circle at center, black, transparent 72%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .glass {
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, var(--panel), rgba(255,255,255,.04));
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      border-radius: 22px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid var(--line);
+      background: rgba(5, 7, 13, .72);
+      backdrop-filter: blur(18px);
+    }
+    body.light .nav { background: rgba(255,255,255,.72); }
+    .nav-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; }
+    .logo {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--cyan), var(--violet));
+      box-shadow: 0 0 60px rgba(0, 213, 255, .28);
+    }
+    .links { display: flex; align-items: center; gap: 8px; }
+    .links a, .icon-btn, .btn {
+      border: 0;
+      min-height: 42px;
+      border-radius: 14px;
+      padding: 10px 14px;
+      color: var(--text);
+      background: transparent;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .links a:hover, .icon-btn:hover, .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.1); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #fff;
+      color: #08111f;
+      box-shadow: 0 0 44px rgba(0, 213, 255, .2);
+    }
+    .btn.secondary { color: var(--text); background: rgba(255,255,255,.1); border: 1px solid var(--line); }
+    .menu { display: none; }
+
+    section { padding: 76px 0; position: relative; }
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 42px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.1);
+      border-radius: 999px;
+      padding: 9px 14px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+    }
+    h1 {
+      margin: 18px 0 0;
+      font-size: clamp(48px, 9vw, 104px);
+      line-height: .95;
+      letter-spacing: 0;
+    }
+    h2 { margin: 0; font-size: clamp(32px, 5vw, 56px); line-height: 1; letter-spacing: 0; }
+    h3 { margin: 0; font-size: 22px; }
+    p { line-height: 1.7; }
+    .lead { max-width: 700px; color: var(--muted); font-size: 18px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 32px; }
+    .stat { padding: 18px; }
+    .stat b { display: block; color: var(--cyan); font-size: 28px; }
+    .visual { padding: 28px; position: relative; overflow: hidden; }
+    .visual::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -28% 24%;
+      height: 220px;
+      background: radial-gradient(circle, rgba(0,213,255,.26), transparent 64%);
+    }
+    .flow { display: grid; gap: 16px; margin-top: 26px; position: relative; z-index: 1; }
+    .flow-row { display: flex; gap: 14px; align-items: center; }
+    .dot { width: 15px; height: 15px; border-radius: 999px; background: var(--cyan); box-shadow: 0 0 28px rgba(0,213,255,.65); }
+    .flow-card { flex: 1; padding: 16px; border-radius: 18px; background: rgba(255,255,255,.1); }
+
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 28px; }
+    .grid { display: grid; gap: 16px; }
+    .modules { grid-template-columns: repeat(3, 1fr); }
+    .module { padding: 22px; transition: transform .25s ease, border-color .25s ease; }
+    .module:hover { transform: translateY(-5px); border-color: rgba(0,213,255,.45); }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,.1);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      margin: 4px 4px 0 0;
+    }
+    .level {
+      color: #08111f;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      font-weight: 900;
+    }
+    .module p, .card-muted { color: var(--muted); }
+
+    .lesson-layout { display: grid; grid-template-columns: 1fr 320px; gap: 18px; align-items: start; }
+    .lesson-block { padding: 22px; margin-bottom: 16px; }
+    .nodes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .node { text-align: center; padding: 14px; border: 1px solid rgba(0,213,255,.28); background: rgba(0,213,255,.1); border-radius: 16px; }
+    pre { overflow-x: auto; padding: 16px; border-radius: 16px; background: #08111f; color: #bff6ff; }
+    .sticky { position: sticky; top: 94px; padding: 20px; }
+
+    .dashboard { grid-template-columns: repeat(4, 1fr); }
+    .progress {
+      height: 9px;
+      overflow: hidden;
+      background: rgba(255,255,255,.12);
+      border-radius: 999px;
+    }
+    .bar { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--cyan), var(--green), var(--orange)); }
+
+    .pricing { grid-template-columns: repeat(4, 1fr); }
+    .price { padding: 24px; }
+    .price.featured { border-color: rgba(0,213,255,.55); box-shadow: 0 0 60px rgba(0,213,255,.18); }
+    .money { font-size: 40px; font-weight: 950; margin: 18px 0 0; }
+    .list { padding: 0; list-style: none; color: var(--muted); }
+    .list li { margin: 12px 0; }
+
+    .two { grid-template-columns: 1fr 1fr; }
+    .panel { padding: 24px; }
+    .table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .table th, .table td { text-align: left; padding: 14px; border-bottom: 1px solid var(--line); }
+
+    .tutor-fab {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 50;
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      border: 0;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--cyan), var(--violet));
+      color: white;
+      box-shadow: 0 18px 60px rgba(0,213,255,.28);
+      font-size: 24px;
+    }
+    .tutor {
+      position: fixed;
+      right: 20px;
+      bottom: 90px;
+      z-index: 49;
+      width: min(420px, calc(100vw - 40px));
+      max-height: 72vh;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .tutor.open { display: flex; }
+    .tutor-head { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid var(--line); }
+    .chat { padding: 14px; overflow-y: auto; display: grid; gap: 10px; }
+    .bubble { padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,.1); color: var(--muted); font-size: 14px; }
+    .bubble.user { margin-left: 42px; background: rgba(0,213,255,.18); color: var(--text); }
+    .tutor-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+    input {
+      min-width: 0;
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      color: var(--text);
+      background: rgba(255,255,255,.08);
+      outline: none;
+    }
+
+    .fade { animation: fade .7s ease both; }
+    @keyframes fade { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+    @media (max-width: 980px) {
+      .hero, .lesson-layout, .two { grid-template-columns: 1fr; }
+      .modules, .pricing { grid-template-columns: repeat(2, 1fr); }
+      .dashboard { grid-template-columns: repeat(2, 1fr); }
+      .nodes { grid-template-columns: repeat(2, 1fr); }
+      .links {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        top: 76px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--bg);
+      }
+      .links.open { display: flex; }
+      .menu { display: inline-flex; }
+    }
+    @media (max-width: 640px) {
+      .modules, .pricing, .dashboard, .stats { grid-template-columns: 1fr; }
+      section { padding: 54px 0; }
+      .hero { min-height: auto; padding-top: 44px; }
+      .section-head { display: block; }
+      .actions .btn { width: 100%; }
+      h1 { font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#home"><span class="logo">AI</span><span>AI Mastery Academy</span></a>
+      <div class="links" id="links">
+        <a href="#roadmap">Roadmap</a>
+        <a href="#courses">Courses</a>
+        <a href="#lesson">Lesson</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#admin">Admin</a>
+      </div>
+      <div>
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">☀</button>
+        <button class="icon-btn menu" id="menuBtn" aria-label="Toggle menu">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="home">
+    <section class="wrap hero">
+      <div class="fade">
+        <span class="eyebrow">✦ AI-first learning, projects, tutor, certification</span>
+        <h1>AI Mastery Academy</h1>
+        <p class="lead">A premium AI learning platform that takes students from beginner fundamentals to machine learning, generative AI, agents, fine-tuning, vector databases, MCP, and automation.</p>
+        <div class="actions">
+          <a class="btn" href="#roadmap">Explore Roadmap →</a>
+          <a class="btn secondary" href="#dashboard">View Dashboard</a>
+        </div>
+        <div class="stats">
+          <div class="glass stat"><b>10</b><span>AI modules</span></div>
+          <div class="glass stat"><b>120+</b><span>Learning blocks</span></div>
+          <div class="glass stat"><b>42%</b><span>Demo progress</span></div>
+          <div class="glass stat"><b>24/7</b><span>AI tutor</span></div>
+        </div>
+      </div>
+      <div class="glass visual fade">
+        <span class="eyebrow">Live learning system</span>
+        <h3 style="margin-top:18px;font-size:32px">Neural Roadmap</h3>
+        <div class="flow">
+          <div class="flow-row"><span class="dot"></span><div class="flow-card"><b>Foundation</b><br><span class="card-muted">AI, math, Python</span></div></div>
+          <div class="flow-row"><span class="dot" style="background:var(--green)"></span><div class="flow-card"><b>Builder</b><br><span class="card-muted">Data, ML, deep learning</span></div></div>
+          <div class="flow-row"><span class="dot" style="background:var(--orange)"></span><div class="flow-card"><b>Architect</b><br><span class="card-muted">GenAI, agents, automation</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap" id="roadmap">
+      <div class="section-head">
+        <div><span class="eyebrow">Learning roadmap</span><h2 style="margin-top:16px">From beginner to AI architect.</h2></div>
+      </div>
+      <div class="grid" id="roadmapList"></div>
+    </section>
+
+    <section class="wrap" id="courses">
+      <div class="section-head">
+        <div><span class="eyebrow">Course catalog</span><h2 style="margin-top:16px">Structured AI mastery.</h2></div>
+      </div>
+      <div class="grid modules" id="moduleGrid"></div>
+    </section>
+
+    <section class="wrap" id="lesson">
+      <span class="eyebrow">Interactive lesson</span>
+      <h2 style="margin-top:16px">What is Artificial Intelligence?</h2>
+      <p class="lead">Every lesson uses reusable learning blocks: explanation, real examples, visualization, exercise, coding playground, quiz, project, notes, and AI summary.</p>
+      <div class="lesson-layout" style="margin-top:28px">
+        <div>
+          <div class="glass lesson-block"><h3>Beginner-friendly explanation</h3><p class="card-muted">AI is software that learns patterns, makes predictions, generates content, or takes actions from data and instructions. Start with the problem, identify the inputs and outputs, then choose the simplest model that can improve the workflow.</p></div>
+          <div class="glass lesson-block"><h3>Real-world examples</h3><p class="card-muted">Recommendation engines, fraud detection, document summarization, medical triage, customer support automation, code assistants, and personalized learning paths.</p></div>
+          <div class="glass lesson-block"><h3>Interactive visualization</h3><div class="nodes"><div class="node">Concept</div><div class="node">Data</div><div class="node">Model</div><div class="node">Feedback</div><div class="node">Improvement</div></div></div>
+          <div class="glass lesson-block"><h3>Coding playground</h3><pre><code>def experiment(input_data):
+    # transform data and explain your reasoning
+    return input_data</code></pre></div>
+          <div class="glass lesson-block"><h3>Mini project</h3><p class="card-muted">Design an AI opportunity map for a healthcare, finance, or education workflow. Include the user problem, input data, model behavior, risks, and success metric.</p></div>
+        </div>
+        <aside class="glass sticky">
+          <h3>Lesson controls</h3>
+          <p class="card-muted">Completion awards XP, updates streaks, unlocks badges, and contributes to certificate eligibility.</p>
+          <button class="btn" style="width:100%">Mark Complete</button>
+          <button class="btn secondary" style="width:100%;margin-top:10px">Generate Quiz</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="wrap" id="dashboard">
+      <span class="eyebrow">Personal dashboard</span>
+      <h2 style="margin-top:16px">Progress, streaks, XP, badges.</h2>
+      <div class="grid dashboard" style="margin-top:28px">
+        <div class="glass panel"><h3>42%</h3><p class="card-muted">Course completion</p></div>
+        <div class="glass panel"><h3>18 days</h3><p class="card-muted">Learning streak</p></div>
+        <div class="glass panel"><h3>6,840</h3><p class="card-muted">XP points</p></div>
+        <div class="glass panel"><h3>#7</h3><p class="card-muted">Leaderboard rank</p></div>
+      </div>
+      <div class="grid two" style="margin-top:16px">
+        <div class="glass panel">
+          <h3>Roadmap progress</h3>
+          <p>AI Fundamentals</p><div class="progress"><div class="bar" style="width:82%"></div></div>
+          <p>Machine Learning</p><div class="progress"><div class="bar" style="width:51%"></div></div>
+          <p>Generative AI</p><div class="progress"><div class="bar" style="width:34%"></div></div>
+        </div>
+        <div class="glass panel">
+          <h3>Achievements</h3>
+          <span class="tag level">Foundation Builder</span>
+          <span class="tag level">Python Pilot</span>
+          <span class="tag level">Prompt Strategist</span>
+          <span class="tag level">Streak Master</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap" id="pricing">
+      <span class="eyebrow">Pricing</span>
+      <h2 style="margin-top:16px">Plans for every learner.</h2>
+      <div class="grid pricing" id="pricingGrid" style="margin-top:28px"></div>
+    </section>
+
+    <section class="wrap" id="community">
+      <div class="grid two">
+        <div class="glass panel">
+          <h2>Community discussions</h2>
+          <p class="card-muted">Discuss fine-tuning vs RAG, share model evaluation checklists, compare agent workflows, and get feedback from peers and instructors.</p>
+        </div>
+        <div class="glass panel">
+          <h2>Project showcase</h2>
+          <p class="card-muted">Publish capstones like AI Study Coach, Churn Prediction Studio, and Agentic Support Desk with tags, likes, and featured status.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap" id="certificate">
+      <div class="glass panel" style="text-align:center">
+        <span class="eyebrow">Verified certificate</span>
+        <h2 style="margin-top:18px">Professional certification</h2>
+        <p class="lead" style="margin-left:auto;margin-right:auto">Auto-generated certificates include unique IDs, QR verification, PDF download controls, and LinkedIn sharing.</p>
+        <div style="width:140px;height:140px;margin:24px auto;border-radius:20px;background:#fff;color:#08111f;display:grid;place-items:center;font-size:64px">▦</div>
+        <code>AIMA-DEMO-2026</code>
+      </div>
+    </section>
+
+    <section class="wrap" id="admin">
+      <span class="eyebrow">Admin panel</span>
+      <h2 style="margin-top:16px">Operations command center.</h2>
+      <div class="glass panel" style="margin-top:28px;overflow-x:auto">
+        <table class="table">
+          <thead><tr><th>Area</th><th>Capability</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>User management</td><td>Roles, subscriptions, activity</td><td>Ready</td></tr>
+            <tr><td>Course management</td><td>Modules, lessons, content status</td><td>Ready</td></tr>
+            <tr><td>Quiz builder</td><td>Questions, attempts, scoring</td><td>Ready</td></tr>
+            <tr><td>Analytics</td><td>Growth, completion, quiz performance</td><td>Ready</td></tr>
+            <tr><td>Revenue</td><td>Plans, payments, subscription mix</td><td>Ready</td></tr>
+            <tr><td>Certificates</td><td>Issue, verify, revoke, export</td><td>Ready</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <aside class="glass tutor" id="tutor">
+    <div class="tutor-head"><b>AI Tutor</b><button class="icon-btn" id="closeTutor">×</button></div>
+    <div class="chat" id="chat">
+      <div class="bubble">I can explain concepts, review code, generate examples, create quizzes, and recommend your next lesson.</div>
+    </div>
+    <div class="tutor-form">
+      <input id="tutorInput" placeholder="Ask about AI, RAG, agents, Python..." />
+      <button class="btn" id="sendTutor">Send</button>
+    </div>
+  </aside>
+  <button class="tutor-fab" id="openTutor" aria-label="Open AI Tutor">✦</button>
+
+  <script>
+    const modules = [
+      ["AI Fundamentals", "What is AI, History of AI, Types of AI, Real-World Applications", "Beginner", "3 weeks", false],
+      ["Mathematics for AI", "Statistics, Probability, Linear Algebra, Calculus", "Core", "5 weeks", false],
+      ["Python Programming", "Variables, Loops, Functions, OOP, File Handling", "Beginner", "6 weeks", false],
+      ["Data Analysis", "Excel, SQL, Pandas, NumPy, Data Visualization", "Core", "6 weeks", true],
+      ["Machine Learning", "Regression, Classification, Clustering, Model Evaluation", "Core", "8 weeks", true],
+      ["Deep Learning", "Neural Networks, CNNs, RNNs, Transformers", "Advanced", "8 weeks", true],
+      ["Generative AI", "LLMs, GPT, Gemini, Claude, Open-Source Models", "Advanced", "7 weeks", true],
+      ["Prompt Engineering", "Zero-Shot, Few-Shot, Chain of Thought, RAG", "Core", "4 weeks", true],
+      ["AI Agents", "Single Agent, Multi-Agent Systems, Agent Workflows", "Advanced", "6 weeks", true],
+      ["Advanced AI", "Fine-Tuning, Vector Databases, LangChain, MCP, AI Automation", "Advanced", "9 weeks", true]
+    ];
+
+    const moduleGrid = document.querySelector("#moduleGrid");
+    const roadmapList = document.querySelector("#roadmapList");
+    modules.forEach((m, i) => {
+      const tags = m[1].split(", ").map(t => `<span class="tag">${t}</span>`).join("");
+      moduleGrid.insertAdjacentHTML("beforeend", `<article class="glass module"><span class="tag level">${String(i + 1).padStart(2, "0")} / ${m[2]}</span>${m[4] ? '<span class="tag">Premium</span>' : ''}<h3 style="margin-top:18px">${m[0]}</h3><p>${m[1]}</p><div>${tags}</div><p><b>${m[3]}</b></p></article>`);
+      roadmapList.insertAdjacentHTML("beforeend", `<article class="glass panel"><span class="tag level">${String(i + 1).padStart(2, "0")} / ${m[2]}</span>${m[4] ? '<span class="tag">Premium</span>' : ''}<h3 style="margin-top:14px">${m[0]}</h3><p class="card-muted">${m[1]}</p></article>`);
+    });
+
+    const plans = [
+      ["Free", "$0", ["AI fundamentals", "Community access", "Starter quizzes"]],
+      ["Starter", "$19", ["Core modules", "Progress tracking", "Downloadable notes"]],
+      ["Pro", "$49", ["All modules", "AI Tutor", "Certificates", "Projects"]],
+      ["Lifetime", "$199", ["Everything in Pro", "Lifetime updates", "Priority tutor credits"]]
+    ];
+    const pricingGrid = document.querySelector("#pricingGrid");
+    plans.forEach(plan => {
+      pricingGrid.insertAdjacentHTML("beforeend", `<article class="glass price ${plan[0] === "Pro" ? "featured" : ""}"><h3>${plan[0]}</h3><div class="money">${plan[1]}</div><p class="card-muted">Stripe, Razorpay, PayPal, UPI adapter-ready</p><ul class="list">${plan[2].map(f => `<li>✓ ${f}</li>`).join("")}</ul><button class="btn" style="width:100%">Choose Plan</button></article>`);
+    });
+
+    const menuBtn = document.querySelector("#menuBtn");
+    const links = document.querySelector("#links");
+    menuBtn.addEventListener("click", () => links.classList.toggle("open"));
+    links.addEventListener("click", () => links.classList.remove("open"));
+
+    const themeBtn = document.querySelector("#themeBtn");
+    themeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+      themeBtn.textContent = document.body.classList.contains("light") ? "☾" : "☀";
+    });
+
+    const tutor = document.querySelector("#tutor");
+    const chat = document.querySelector("#chat");
+    const tutorInput = document.querySelector("#tutorInput");
+    document.querySelector("#openTutor").addEventListener("click", () => tutor.classList.toggle("open"));
+    document.querySelector("#closeTutor").addEventListener("click", () => tutor.classList.remove("open"));
+    document.querySelector("#sendTutor").addEventListener("click", sendTutor);
+    tutorInput.addEventListener("keydown", event => { if (event.key === "Enter") sendTutor(); });
+    function sendTutor() {
+      const value = tutorInput.value.trim();
+      if (!value) return;
+      chat.insertAdjacentHTML("beforeend", `<div class="bubble user">${escapeHtml(value)}</div>`);
+      tutorInput.value = "";
+      const reply = `Start with the core idea behind "${escapeHtml(value)}", connect it to a real AI product, then practice with a tiny project. I can also generate a quiz or review your code.`;
+      chat.insertAdjacentHTML("beforeend", `<div class="bubble">${reply}</div>`);
+      chat.scrollTop = chat.scrollHeight;
+    }
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m]));
+    }
+  </script>
+</body>
+</html>
